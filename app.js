@@ -28,6 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Set Security HTTP Headers
 app.use(helmet());
 
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://cdnjs.cloudflare.com https://js.stripe.com"
+  );
+  next();
+});
+
 //Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
